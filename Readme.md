@@ -265,4 +265,6 @@ Como continuidade do trabalho, deverão ser realizados experimentos para avaliar
 
 # Resultados do PWA
 
+Primeira fase de treinamento com IA - 5000 artefatos.
+
 <img src="app.jpg" width="180" align="center">
