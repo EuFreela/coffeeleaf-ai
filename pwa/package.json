@@ -1,0 +1,23 @@
+{
+  "name": "coffeeleaf-ai-pwa",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "PWA de identificacao de condicoes foliares do cafeeiro (Coffea arabica) com inferencia 100% no navegador",
+  "scripts": {
+    "dev": "vite",
+    "dev:lan": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview --port 4173",
+    "preview:lan": "vite preview --host 0.0.0.0 --port 4173",
+    "test": "node --test src/*.test.js",
+    "icons": "python scripts/gerar-icones.py"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs": "4.22.0"
+  },
+  "devDependencies": {
+    "vite": "^7.1.5",
+    "vite-plugin-pwa": "^1.0.3"
+  }
+}

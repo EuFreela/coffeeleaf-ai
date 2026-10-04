@@ -1,0 +1,728 @@
+/* ==========================================================================
+   CoffeeLeaf AI — folha de estilo unica.
+   Mobile-first, largura maxima 640px, tema escuro com contraste AA.
+   Estados visuais governados por [data-state] / [data-midia] no <body>.
+   ========================================================================== */
+
+:root {
+  --fundo: #0b1a12;
+  --fundo-2: #0f2419;
+  --superficie: #16311f;
+  --superficie-2: #1d3d28;
+  --borda: #2f5738;
+  --texto: #eaf5ec;
+  --texto-suave: #a9c7b1;
+  --primaria: #4ade80;
+  --primaria-escura: #16a34a;
+  --primaria-tinta: #052e16;
+  --atencao: #fbbf24;
+  --atencao-tinta: #3a2a05;
+  --erro: #fca5a5;
+  --erro-tinta: #3f1212;
+  --raio: 14px;
+  --sombra: 0 10px 30px rgb(0 0 0 / 35%);
+  --fonte: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --fundo: #f4f7f4;
+    --fundo-2: #ffffff;
+    --superficie: #ffffff;
+    --superficie-2: #eef4ef;
+    --borda: #cddcd2;
+    --texto: #10251a;
+    --texto-suave: #4a6355;
+    --primaria: #16a34a;
+    --primaria-escura: #15803d;
+    --primaria-tinta: #ffffff;
+    --atencao: #a16207;
+    --atencao-tinta: #fdf6e3;
+    --erro: #b91c1c;
+    --erro-tinta: #fdeaea;
+    --sombra: 0 8px 24px rgb(16 37 26 / 10%);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   Bug corrigido: `hidden` nao escondia nada.
+   Regras de autor (ex.: `.faixa { display: flex }`) vencem a regra
+   `[hidden] { display: none }` do user-agent, independente de especificidade.
+   Resultado: o bloco de erro e o aviso de nova versao apareciam sempre.
+   Este reset garante que `hidden` volte a fazer o que promete.
+   -------------------------------------------------------------------------- */
+[hidden] {
+  display: none !important;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0 1rem calc(2rem + env(safe-area-inset-bottom));
+  font-family: var(--fonte);
+  color: var(--texto);
+  background:
+    radial-gradient(1200px 500px at 50% -10%, var(--fundo-2), transparent 70%),
+    var(--fundo);
+  line-height: 1.55;
+  min-height: 100dvh;
+}
+
+h1,
+h2 {
+  line-height: 1.25;
+  margin: 0;
+}
+
+a {
+  color: var(--primaria);
+}
+
+/* --- foco visivel: nunca removido (sdd.md §6.4) --- */
+:focus-visible {
+  outline: 2px solid var(--primaria);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.visualmente-oculto {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.pular-para-conteudo {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--primaria);
+  color: var(--primaria-tinta);
+  border-radius: 0 0 var(--raio) 0;
+  font-weight: 600;
+}
+.pular-para-conteudo:focus {
+  left: 0;
+}
+
+/* ------------------------------ cabecalho ------------------------------ */
+
+.cabecalho {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: calc(1rem + env(safe-area-inset-top)) 0 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.marca-icone {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 12px;
+  background: linear-gradient(145deg, var(--primaria), var(--primaria-escura));
+  color: var(--primaria-tinta);
+}
+
+.marca strong {
+  display: block;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+}
+
+.marca small {
+  display: block;
+  color: var(--texto-suave);
+  font-size: 0.8rem;
+}
+
+/* --------------------------------- cartoes ----------------------------- */
+
+main {
+  max-width: 640px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1rem;
+}
+
+.cartao {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  padding: 1.1rem;
+  box-shadow: var(--sombra);
+}
+
+.titulo-etapa {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--texto-suave);
+  margin-bottom: 0.9rem;
+}
+
+.numero {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--superficie-2);
+  border: 1px solid var(--borda);
+  color: var(--primaria);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* ------------------------------ area de midia ------------------------- */
+
+.area-midia {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #05130b;
+  border: 1px solid var(--borda);
+  display: grid;
+  place-items: center;
+}
+
+/* fonte 1:1 para o preview e o recorte (sdd.md C-5) */
+.midia {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+[data-midia='camera'] #video,
+[data-midia='imagem'] #imagem {
+  display: block;
+}
+
+.midia-vazio {
+  grid-area: 1 / 1;
+  margin: 0;
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+  max-width: 30ch;
+}
+
+[data-midia='camera'] .midia-vazio,
+[data-midia='imagem'] .midia-vazio {
+  display: none;
+}
+
+/* guia de enquadramento: indica a area quadrada que sera recortada */
+.guia {
+  grid-area: 1 / 1;
+  width: 78%;
+  aspect-ratio: 1 / 1;
+  border: 2px dashed rgb(255 255 255 / 55%);
+  border-radius: 10px;
+  box-shadow: 0 0 0 100vmax rgb(0 0 0 / 32%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+[data-midia='camera'] .guia {
+  opacity: 1;
+}
+
+/* -------------------------------- botoes ------------------------------ */
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  transition: transform 0.08s ease, filter 0.15s ease, background 0.15s ease;
+}
+
+button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.botao-primario,
+.botao-secundario {
+  flex: 1 1 10rem;
+  min-height: 48px; /* alvo de toque confortavel */
+  padding: 0.7rem 1rem;
+  font-weight: 650;
+}
+
+.botao-primario {
+  background: linear-gradient(145deg, var(--primaria), var(--primaria-escura));
+  color: var(--primaria-tinta);
+}
+
+.botao-secundario {
+  background: var(--superficie-2);
+  color: var(--texto);
+  border-color: var(--borda);
+}
+
+.botao-secundario:hover:not(:disabled),
+.botao-primario:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+#btn-instalar {
+  flex: none;
+  min-height: 40px;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+/* --------------------------------- modos ------------------------------- */
+
+.modos {
+  margin: 1rem 0 0;
+  padding: 0.5rem;
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  background: var(--superficie-2);
+}
+
+.modos legend {
+  padding: 0 0.4rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--texto-suave);
+}
+
+.modos label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.55rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.modos label:hover {
+  background: color-mix(in srgb, var(--primaria) 12%, transparent);
+}
+
+.modos input {
+  margin-top: 0.25rem;
+  accent-color: var(--primaria);
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: none;
+}
+
+.modos strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.modos small {
+  display: block;
+  color: var(--texto-suave);
+  font-size: 0.8rem;
+}
+
+/* -------------------------------- status ------------------------------- */
+
+.status {
+  margin: 0;
+  color: var(--texto-suave);
+  font-size: 0.92rem;
+}
+
+.diagnostico {
+  margin: 0.6rem 0 0;
+  color: var(--texto-suave);
+  font-size: 0.78rem;
+  min-height: 1.2em;
+}
+
+/* ------------------------------- resultado ----------------------------- */
+
+.resultado {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--borda);
+}
+
+.resultado-rotulo {
+  margin: 0 0 0.35rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--texto-suave);
+}
+
+.resultado-principal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  background: linear-gradient(145deg, var(--superficie-2), transparent);
+  border: 1px solid var(--borda);
+}
+
+.resultado-principal strong {
+  font-size: clamp(1.4rem, 6vw, 1.9rem);
+  color: var(--primaria);
+  letter-spacing: -0.02em;
+}
+
+.resultado-confianca {
+  font-size: 0.78rem;
+  color: var(--texto-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.resultado-confianca b {
+  display: block;
+  font-size: 1.35rem;
+  color: var(--texto);
+  letter-spacing: -0.01em;
+}
+
+.resultado-detalhe {
+  margin: 0.6rem 0 0;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+
+/* -------------------------------- barras ------------------------------- */
+
+.barras {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.barra {
+  display: grid;
+  grid-template-columns: minmax(5.5rem, 9rem) 1fr 3.2rem;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+}
+
+.barra-rotulo {
+  color: var(--texto-suave);
+}
+
+.barra-trilho {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--superficie-2);
+  overflow: hidden;
+}
+
+.barra-preenchimento {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--primaria-escura), var(--primaria));
+  transition: width 0.35s ease;
+}
+
+.barra-valor {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--texto);
+}
+
+/* -------------------------------- faixas ------------------------------- */
+
+.faixa {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 1rem 0 0;
+  padding: 0.75rem 0.9rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  border: 1px solid var(--borda);
+  background: var(--superficie-2);
+}
+
+.faixa p {
+  margin: 0;
+}
+
+.faixa-aviso {
+  border-color: color-mix(in srgb, var(--atencao) 45%, var(--borda));
+  background: var(--atencao-tinta);
+  color: var(--texto);
+}
+
+.faixa-atencao {
+  border-color: var(--atencao);
+  background: var(--atencao-tinta);
+  color: var(--texto);
+  font-weight: 600;
+}
+
+/* -------------------------------- toasts ------------------------------- */
+/*
+   Posicionados no topo e fora do fluxo: independem de rolagem, que era
+   exatamente o problema do bloco de erro no rodape (sdd.md §6.5).
+*/
+
+.toasts {
+  position: fixed;
+  inset-inline: 0;
+  top: calc(env(safe-area-inset-top) + 10px);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding-inline: 0.75rem;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  width: 100%;
+  max-width: 30rem;
+  padding: 0.8rem 0.85rem 0.8rem 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--borda);
+  background: var(--superficie);
+  box-shadow: var(--sombra);
+  font-size: 0.88rem;
+  animation: toast-entra 0.22s ease-out;
+}
+
+.toast-saindo {
+  animation: toast-sai 0.22s ease-in forwards;
+}
+
+@keyframes toast-entra {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes toast-sai {
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+/* faixa lateral de cor, para nao depender so da cor do fundo */
+.toast::before {
+  content: '';
+  flex: none;
+  align-self: stretch;
+  width: 4px;
+  margin: -0.8rem 0 -0.8rem -1rem;
+  border-radius: 12px 0 0 12px;
+  background: var(--texto-suave);
+}
+
+.toast-erro {
+  border-color: var(--erro);
+}
+.toast-erro::before {
+  background: var(--erro);
+}
+
+.toast-aviso {
+  border-color: var(--atencao);
+}
+.toast-aviso::before {
+  background: var(--atencao);
+}
+
+.toast-info::before {
+  background: var(--primaria);
+}
+
+.toast-conteudo {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.toast-conteudo strong {
+  font-size: 0.92rem;
+  line-height: 1.3;
+}
+
+.toast-conteudo span {
+  color: var(--texto-suave);
+  font-size: 0.84rem;
+  overflow-wrap: anywhere;
+}
+
+.toast-prefixo {
+  color: var(--texto-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.toast-erro .toast-prefixo {
+  color: var(--erro);
+}
+
+.toast-aviso .toast-prefixo {
+  color: var(--atencao);
+}
+
+.toast-fechar {
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--texto-suave);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+}
+
+.toast-fechar:hover {
+  color: var(--texto);
+  background: var(--superficie-2);
+}
+
+/* --------------------------------- rodape ------------------------------ */
+
+.cartao-info p {
+  margin: 0 0 0.7rem;
+  font-size: 0.9rem;
+}
+
+.cartao-info p:last-child {
+  margin-bottom: 0;
+}
+
+.rodape {
+  max-width: 640px;
+  margin: 1.5rem auto 0;
+  text-align: center;
+  color: var(--texto-suave);
+  font-size: 0.78rem;
+}
+
+.rodape p {
+  margin: 0;
+}
+
+/* ---------------------- estados da maquina (sdd.md §3.3) ---------------- */
+
+[data-state='loading'] .botao-primario,
+[data-state='classifying'] .botao-primario {
+  position: relative;
+  color: transparent;
+}
+
+[data-state='loading'] .botao-primario::after,
+[data-state='classifying'] .botao-primario::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgb(0 0 0 / 25%);
+  border-top-color: var(--primaria-tinta);
+  animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* --------------------- preferencia de movimento ------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ----------------------------- telas maiores --------------------------- */
+
+@media (min-width: 720px) {
+  body {
+    padding-top: 0;
+  }
+  .cartao {
+    padding: 1.4rem;
+  }
+}

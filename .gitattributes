@@ -1,0 +1,19 @@
+# Normalizacao de fim de linha: LF no repositorio, CRLF no checkout do Windows.
+# Evita diffs inteiros quando alguem edita em SO diferente.
+* text=auto eol=lf
+
+# Windows
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binarios: nunca converter linha de linha
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.bin binary
+*.woff binary
+*.woff2 binary
+
+# Pesos do modelo: binarios grandes, ficam fora de qualquer diff textual
+*.json text eol=lf

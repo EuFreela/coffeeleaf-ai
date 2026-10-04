@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>CoffeeLeaf AI — Identificação de condições foliares do cafeeiro</title>
+    <meta
+      name="description"
+      content="Fotografe uma folha de café e identifique sua condição fitossanitária em segundos. Análise por inteligência artificial executada inteiramente no seu dispositivo."
+    />
+    <meta name="theme-color" content="#0f2419" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="CoffeeLeaf" />
+    <link rel="icon" href="icons/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+    <!--
+      CSP (sdd.md §9). Sem CDN e sem analytics: connect-src 'self' torna
+      impossivel qualquer exfiltracao de imagem. blob: em img-src/media-src e
+      obrigatorio para o preview da foto e do stream da camera.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self';
+               script-src 'self';
+               style-src 'self' 'unsafe-inline';
+               img-src 'self' data: blob:;
+               media-src 'self' blob:;
+               connect-src 'self';
+               worker-src 'self';
+               manifest-src 'self';
+               object-src 'none';
+               base-uri 'none';
+               form-action 'none';"
+    />
+  </head>
+
+  <body data-state="idle" data-midia="vazio">
+    <a class="pular-para-conteudo" href="#conteudo">Pular para o conteúdo</a>
+
+    <header class="cabecalho">
+      <div class="marca">
+        <span class="marca-icone" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21c0-5 3-9 8-10-1 6-4 9-8 10Z" />
+            <path d="M12 21c0-5-3-9-8-10 1 6 4 9 8 10Z" />
+            <path d="M12 21v-4" />
+          </svg>
+        </span>
+        <span>
+          <strong>CoffeeLeaf AI</strong>
+          <small>Condições foliares do cafeeiro</small>
+        </span>
+      </div>
+      <button id="btn-instalar" class="botao-secundario" type="button" hidden>
+        Instalar aplicativo
+      </button>
+    </header>
+
+    <div id="toasts" class="toasts" aria-live="polite" aria-atomic="false"></div>
+
+    <main id="conteudo">
+      <!-- ETAPA 1 — captura -->
+      <section class="cartao" aria-labelledby="titulo-captura">
+        <h2 id="titulo-captura" class="titulo-etapa">
+          <span class="numero">1</span> Capturar a folha
+        </h2>
+
+        <div id="area-midia" class="area-midia">
+          <!-- guia de enquadramento: mostra exatamente o que sera recortado -->
+          <div id="guia" class="guia" aria-hidden="true"></div>
+          <video id="video" class="midia" playsinline muted autoplay></video>
+          <img id="imagem" class="midia" alt="Pré-visualização da folha a ser analisada" />
+          <p class="midia-vazio">
+            Enquadre a folha inteira, com boa luz e sem sombra sobre ela.
+          </p>
+        </div>
+
+        <div class="acoes">
+          <button id="btn-camera" class="botao-primario" type="button">
+            <span aria-hidden="true">📷</span> Usar câmera
+          </button>
+          <button id="btn-enviar" class="botao-secundario" type="button">
+            <span aria-hidden="true">🖼️</span> Enviar imagem
+          </button>
+          <input
+            id="arquivo"
+            type="file"
+            accept="image/*"
+            class="visualmente-oculto"
+            aria-label="Escolher imagem de uma folha de cafeeiro"
+          />
+        </div>
+
+        <fieldset class="modos">
+          <legend>Tipo de classificação</legend>
+          <label>
+            <input type="radio" name="modo" value="multiclass" checked />
+            <span>
+              <strong>5 condições</strong>
+              <small>Cercosporiose, Saudável, Minador, Phoma, Ferrugem</small>
+            </span>
+          </label>
+          <label>
+            <input type="radio" name="modo" value="binary" />
+            <span>
+              <strong>Triagem</strong>
+              <small>Saudável ou Doente</small>
+            </span>
+          </label>
+        </fieldset>
+      </section>
+
+      <!-- ETAPAS 2 e 3 — processamento e classificação -->
+      <section class="cartao" aria-labelledby="titulo-resultado">
+        <h2 id="titulo-resultado" class="titulo-etapa">
+          <span class="numero">2</span> Analisar
+          <span class="numero">3</span> Resultado
+        </h2>
+
+        <p id="status" class="status" role="status" aria-live="polite">
+          Pronto para uma nova análise.
+        </p>
+
+        <div class="acoes">
+          <button id="btn-analisar" class="botao-primario" type="button" disabled>
+            Analisar folha
+          </button>
+          <button id="btn-reiniciar" class="botao-secundario" type="button" hidden>
+            Limpar
+          </button>
+        </div>
+
+        <p id="diag" class="diagnostico"></p>
+
+        <div id="resultado" class="resultado" aria-live="polite" hidden>
+          <p class="resultado-rotulo">Resultado</p>
+          <div class="resultado-principal">
+            <strong id="resultado-rotulo"></strong>
+            <span class="resultado-confianca">
+              Confiança do modelo
+              <b id="resultado-confianca"></b>
+            </span>
+          </div>
+          <p id="resultado-detalhe" class="resultado-detalhe" hidden></p>
+
+          <ul id="barras" class="barras"></ul>
+
+          <p id="aviso-confianca" class="faixa faixa-atencao" hidden></p>
+
+          <p class="faixa faixa-aviso">
+            <span aria-hidden="true">⚠️</span>
+            Ferramenta de apoio à identificação visual. O resultado <strong>não
+            substitui</strong> a avaliação de um profissional habilitado e não
+            confirma diagnóstico fitossanitário.
+          </p>
+        </div>
+      </section>
+
+      <section class="cartao cartao-info" aria-labelledby="titulo-info">
+        <h2 id="titulo-info">Sobre o modelo</h2>
+        <p>
+          Rede convolutional <strong>MobileNetV2</strong> (539 mil parâmetros)
+          treinada com imagens de folhas de <em>Coffea arabica</em> coletadas em
+          plantação no Quênia, em cinco condições: cercosporiose, folha
+          saudável, minador, Phoma e ferrugem.
+        </p>
+        <p class="diagnostico">
+          Todo o processamento ocorre <strong>neste dispositivo</strong>. A foto
+          não é enviada a nenhum servidor, e o aplicativo funciona sem internet
+          depois da primeira visita.
+        </p>
+      </section>
+    </main>
+
+    <footer class="rodape">
+      <p>
+        Dataset · Universidade Federal de Viçosa ·
+        <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8165403/" rel="noopener noreferrer" target="_blank">dataset JMuBEN/JMuBEN2</a>
+      </p>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

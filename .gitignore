@@ -1,0 +1,19 @@
+# Dependencias e build
+node_modules/
+dist/
+dev-dist/
+.vite/
+*.local
+
+# Dataset JMuBEN/JMuBEN2 — nao versionado.
+# Sao ~219 MB de terceiro, disponivel publicamente no Mendeley Data.
+# Ver ../BAIXAR-DATASET.md
+data/
+data.zip
+
+# Ambiente
+.env
+.env.*
+.DS_Store
+Thumbs.db
+desktop.ini
