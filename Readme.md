@@ -80,7 +80,7 @@ Para ilustrar as classes utilizadas na amostragem do conjunto de dados, são apr
 
 | rust_0001 | rust_0002 | rust_0003 | rust_0004 |
 |:---:|:---:|:---:|:---:|
-| <img src="data/rust/rust_0001.jpg" width="180"> | <img src="data/rust/rust_0002.jpg" width="180"> | <img src="data/rust/rust_0003.jpg" width="180"> | <img src="data/rust/rust_0004.jpg" width="180"> |
+| <img src="data/Rust/rust_0001.jpg" width="180"> | <img src="data/Rust/rust_0002.jpg" width="180"> | <img src="data/Rust/rust_0003.jpg" width="180"> | <img src="data/Rust/rust_0004.jpg" width="180"> |
 
 As imagens apresentadas acima correspondem apenas a uma amostragem visual das cinco classes utilizadas no projeto. O conjunto completo permanece organizado nos respectivos diretórios dentro de `data/`, seguindo o mesmo padrão de nomenclatura.
 
