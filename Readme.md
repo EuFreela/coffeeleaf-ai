@@ -257,6 +257,12 @@ Como continuidade do trabalho, deverão ser realizados experimentos para avaliar
 
 1. JEPKOECH, J.; MUGO, D. M.; KENDUIYWO, B. K.; TOO, E. C. **Arabica coffee leaf images dataset for coffee leaf disease detection and classification**. **Data in Brief**, v. 36, 107142, 2021. DOI: 10.1016/j.dib.2021.107142. https\://pmc.ncbi.nlm.nih.gov/articles/PMC8165403/
 
-2. KROHLING, R.; TOZZI DE SOUZA, J. E.; TASSIS, L. M. **\*\*BRACOT – A Brazilian Arabica Coffee Tree images dataset for instance segmentation of coffee leaves\*\***. Mendeley Data, 2021. DOI: 10.17632/pmkbyjpf6k.1. https\://data.mendeley.com/datasets/pmkbyjpf6k/1
+2. KROHLING, R.; TOZZI DE SOUZA, J. E.; TASSIS, L. M. **BRACOT – A Brazilian Arabica Coffee Tree images dataset for instance segmentation of coffee leaves**. Mendeley Data, 2021. DOI: 10.17632/pmkbyjpf6k.1. https\://data.mendeley.com/datasets/pmkbyjpf6k/1
 
 3. **Arabica coffee leaf disease classification dataset – JMuBEN/JMuBEN2**. Mendeley Data, 2021. Conjunto de imagens classificadas de folhas de café arábica nas categorias Healthy, Miner, Rust, Phoma e Cercospora. https\://data.mendeley.com/datasets/t2r6rszp5c/1
+
+---
+
+# Resultados do PWA
+
+<img src="app.jpg" width="180" align="center">
