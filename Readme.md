@@ -265,6 +265,6 @@ Como continuidade do trabalho, deverão ser realizados experimentos para avaliar
 
 # Resultados do PWA
 
-Primeira fase de treinamento com IA - 5000 artefatos.
+**Primeira fase de treinamento do modelo de inteligência artificial**, utilizando uma amostra balanceada de 5.000 imagens, sendo 1.000 imagens para cada uma das cinco classes. O aumento da quantidade e da diversidade dos dados de treinamento pode contribuir para melhorar a capacidade de generalização e, consequentemente, o desempenho do modelo, desde que os dados sejam representativos e de qualidade.
 
 <img src="app.jpg" width="180" align="center">
