@@ -5,11 +5,14 @@ dev-dist/
 .vite/
 *.local
 
-# Dataset JMuBEN/JMuBEN2 — nao versionado.
+# Dataset JMuBEN/JMuBEN2 completo — nao versionado.
 # Sao ~219 MB de terceiro, disponivel publicamente no Mendeley Data.
-# Ver ../BAIXAR-DATASET.md
-data/
+# O que fica versionado e a amostra data/ (20 imagens, 4/classe).
+# Ver BAIXAR-DATASET.md
 data.zip
+
+# Se voce substituir data/ pelo conjunto completo, descomente:
+# data/**
 
 # Ambiente
 .env

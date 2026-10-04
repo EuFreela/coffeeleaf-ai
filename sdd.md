@@ -105,14 +105,18 @@ Sequential "sequential_3"
 
 ### 2.3 Dataset de referência
 
-`data/` — subconjunto do JMuBEN/JMuBEN2, 5.000 imagens (1.000 por classe). Não é usado em runtime; serve para validação (§12.2) e re-treinamento futuro.
+`data/` — amostra do JMuBEN/JMuBEN2 versionada no repositório, **20 imagens (4 por classe)**. Não é usado em runtime; serve como *fixture* reproduzível para a validação do pipeline (§12.2) e para re-treinamento futuro.
 
-Dimensões observadas (amostra de 150 por classe):
+O conjunto completo tem 58.555 imagens (Mendeley Data, DOI `10.17632/t2r6rszp5c.1`) e **não** é versionado — ver `BAIXAR-DATASET.md`. As medições de dimensão abaixo vêm de uma cópia de trabalho maior, que existiu durante o desenvolvimento e não está no repositório.
+
+Dimensões observadas (amostra de 750 imagens da cópia de trabalho):
 
 | Dimensão | Ocorrências | Observação |
 |---|---:|---|
 | `128×128` | 713 | maioria absoluta — JMuBEN2 já vem reduzido |
 | `256×N` / `N×256` (N ≈ 92–256) | ~37 | **faixas verticais/horizontais** com múltiplas folhas |
+
+Na amostra de 20 versionada, 15 são `128×128` e 5 são faixas: `113×256`, `256×126`, `74×256`, `119×256`, `109×256` — a mesma proporção do conjunto maior (~5% aqui, ~5% lá).
 
 > **Risco R-02 — entrada não quadrada.** Aproximadamente 37 das 750 imagens amostradas são faixas não quadradas (ex.: `256×126`, `104×256`). O corte central quadrado (§5.2) descarta ~50% do conteúdo nessas imagens. Esse é o comportamento do Teachable Machine e, portanto, o comportamento sob o qual o modelo foi treinado — **não** deve ser "corrigido" na PWA sem re-treinar.
 
@@ -602,7 +606,9 @@ Limitações **científicas** (herdadas de `Readme.md` §6, a ser exibidas na UI
 
 ### 12.2 Validação funcional do modelo (executado ✅)
 
-500 imagens (100/classe) de `data/`, pipeline TM equivalente reimplementado em Node (`eval.mjs`).
+Duas execuções, com o pipeline TM equivalente reimplementado em Node (`eval.mjs`).
+
+**a) Amostra ampla — 500 imagens (100/classe)**, de uma cópia de trabalho de 5.000 imagens que existiu durante o desenvolvimento e **não está no repositório**:
 
 | Métrica | Valor |
 |---|---|
@@ -610,7 +616,17 @@ Limitações **científicas** (herdadas de `Readme.md` §6, a ser exibidas na UI
 | Matriz de confusão | diagonal — zero confusões |
 | Precisão por classe | 100% (todas) |
 
-⚠️ Ver limitações §11.3. Este resultado valida a **correção do pipeline de inferência**, que é o objetivo do teste.
+**b) `data/` versionada — 20 imagens (4/classe)**, reproduzível a partir do repositório:
+
+| Métrica | Valor |
+|---|---|
+| Acurácia | **100,00%** (20/20) |
+| Confiança mínima na classe prevista | 100,0% em todas as 20 |
+| Matriz de confusão | diagonal |
+
+> O teste (b) é pequeno demais para medir desempenho, mas serve como **guarda de regressão**: se alguém alterar a normalização, o recorte ou a ordem dos rótulos, a diagonal quebra imediatamente. Isso é o que ele se propõe a ser.
+
+⚠️ Ver limitações §11.3. Nenhum dos dois resultados mede generalização: são imagens de treino, e o modelo provavelmente as memorizou. O que se valida é a **correção do pipeline de inferência**, que é o objetivo.
 
 ### 12.3 Testes automatizados (executado ✅)
 
@@ -757,7 +773,8 @@ Para **câmera em celular**, a via é HTTPS válido: publique `dist/` (§13.3).
 CoffeeLeaf AI/
 ├── sdd.md                     este documento
 ├── Readme.md                  texto acadêmico (não modificado)
-├── data/                      JMuBEN2, 5.000 imagens (1.000/classe)
+├── BAIXAR-DATASET.md          como obter o JMuBEN2 completo
+├── data/                      amostra versionada, 20 imagens (4/classe)
 ├── tm-my-image-model/         pesos originais do Teachable Machine
 └── pwa/
     ├── index.html             app shell + CSP inline
@@ -840,7 +857,8 @@ O documento foi escrito e a implementação executada. Resultado:
 | Pesos íntegros no `dist/` | ✅ md5 3/3 idêntico à origem |
 | Precache offline | ✅ 17 entradas, inclui o modelo |
 | Compatibilidade TF.js 4.22 ↔ modelo 1.7.4 | ✅ verificada |
-| Acurácia em 500 imagens de `data/` | ✅ 100% — *atenção à limitação §11.3* |
+| Acurácia na amostra de `data/` (20) | ✅ 100% — *atenção à limitação §11.3* |
+| Avaliação ampla (500 imgs, cópia de trabalho) | ✅ 100% — não reproduzível a partir do repo |
 | Testes de navegador real (T-20…T-30, T-31…T-35) | ⏳ **pendentes** — exigem navegador e dispositivos móveis |
 | Avaliação com fotos reais de smartphone (`Readme.md` §5) | ⏳ **pendente** — exige captura de campo |
 

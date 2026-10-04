@@ -1,8 +1,13 @@
 # Dataset JMuBEN/JMuBEN2 — como obter
 
-O conjunto de imagens **não** é versionado neste repositório. São ~219 MB de
-dados de terceiros, obtidos publicamente no Mendeley Data e citados no
-trabalho acadêmico (`Readme.md` §2.1, referência 3).
+O conjunto completo de imagens **não** é versionado neste repositório. São
+~219 MB de dados de terceiros, obtidos publicamente no Mendeley Data e citados
+no trabalho acadêmico (`Readme.md` §2.1, referência 3).
+
+O que **está** versionado é `data/`: uma amostra de **20 imagens, 4 por classe**,
+suficiente para conferir que o pipeline de inferência funciona e para servir de
+guarda de regressão (`sdd.md` §12.2b). Para re-treinar com folga, baixe o
+conjunto completo abaixo.
 
 ## Fonte
 
@@ -32,30 +37,33 @@ O conjunto completo tem 58.555 imagens:
 
 ## Estrutura esperada neste repositório
 
-O subconjunto usado para treino fica na raiz do projeto, com este layout:
+O layout é o mesmo da amostra versionada, com mais imagens por pasta:
 
 ```text
 CoffeeLeaf AI/
 └── data/
     ├── Healthy/     Healthy_0001.jpg …
     ├── Miner/       Miner_0001.jpg …
-    ├── rust/        rust_0001.jpg …
+    ├── Rust/        rust_0001.jpg …
     ├── Phoma/       Phoma_0001.jpg …
     └── Cercospora/  Cercospora_0001.jpg …
 ```
 
-Atenção a dois detalhes que já quebraram código:
+Atenção a dois detalhes que já enganaram:
 
-1. **`rust` em minúsculo.** O nome da pasta é `rust`, não `Rust` — igual ao
-   arquivo exportado pelo Teachable Machine. Em Windows não há diferença; em
-   Linux, sim.
+1. **Pasta `Rust` capitalizada, arquivo `rust_*.jpg` em minúsculo.** A
+   discrepância vem da origem — o Teachable Machine exporta o rótulo `Rust`, o
+   Mendeley distribui os arquivos em minúsculo. Em Windows não há diferença; em
+   Linux, um `case` estrito quebra. Confirme os dois lados antes de assumir.
 2. **Sem separador `train`/`val`/`test`.** O split é feito no script de treino,
    não na estrutura de pastas.
 
 ## Colocando o dataset no lugar
 
 1. Baixe o arquivo do Mendeley Data (link acima).
-2. Extraia para a raiz do projeto, renomeando a pasta para `data/`.
+2. Extraia para a raiz do projeto, renomeando a pasta para `data/`. Se já
+   existir uma `data/` com a amostra de 20 imagens, faça merge em vez de
+   sobrescrever.
 3. Confira a contagem:
 
    ```bash
@@ -70,10 +78,12 @@ Atenção a dois detalhes que já quebraram código:
 
 ## Para que serve no workflow
 
-- **Validar o modelo exportado** (`sdd.md` §12.2): a avaliação de 500 imagens
-  usada para conferir o pipeline de inferência.
+- **Validar o modelo exportado** (`sdd.md` §12.2): a amostra de 20 já versionada
+  é suficiente para isso — 20/20 com matriz de confusão diagonal. Uma cópia de
+  trabalho maior, com 5.000 imagens, produziu 500/500 na mesma bateria, mas não
+  está no repositório.
 - **Re-treinar** com arquitetura mais robusta (continuidade prevista em
-  `Readme.md` §7).
+  `Readme.md` §7). É este uso que exige o conjunto completo.
 
 O modelo que a PWA carrega **já está versionado**, em `tm-my-image-model/` e na
 cópia de build `pwa/public/model/`. O dataset não é necessário para rodar o
