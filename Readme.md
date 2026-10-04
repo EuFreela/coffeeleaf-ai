@@ -30,6 +30,8 @@ Dessa maneira, este trabalho propõe utilizar o conjunto JMuBEN/JMuBEN2 como bas
 
 A proposta busca aproximar a utilização de modelos de inteligência artificial do ambiente agrícola, oferecendo uma interface simples na qual o usuário possa fotografar uma folha e receber uma classificação baseada no modelo treinado.
 
+Obs: Para a cooxupé -> disponibilize amostras de café da região seja grãos, foliares ou plantação. A amostra precisa ser validade antes do treinamento. Ai vc verão mais aplicativos ou soluções tecnológicas voltadas para a região de Passos/Alpinopolis.
+
 ---
 
 ## 2. Materiais e métodos
