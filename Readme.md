@@ -3,6 +3,7 @@
 **Author:** Lameck Silva Fernandes  
 **Affiliation:** Independent Researcher  
 **Location:** Passos, MG, Brazil  
+**ORCID:** [https://orcid.org/0000-0002-5476-0537](https://orcid.org/0000-0002-5476-0537)
 
 ---
 
@@ -61,6 +62,8 @@ A subset of 5,000 images was selected from the publicly available JMuBEN/JMuBEN2
 
 ### 2.4 Model training and data partitioning
 
+Generative AI tools (ChatGPT, OpenAI) were used to assist in drafting the manuscript and in providing technical guidance for writing the code used to train and implement the classification model. The author reviewed and validated all AI-generated content and code.
+
 The image classification model was trained using Google Teachable Machine. The training configuration consisted of 50 epochs, a batch size of 16, and a learning rate of 0.001. The model was trained in a single training session using the platform's training interface.
 
 The platform's automatic data partitioning was used. However, the exact partitioning proportions and the specific roles of the resulting subsets were not independently verified. The exported model files are needed to further document the model architecture and implementation details.
@@ -95,17 +98,13 @@ The system should be interpreted as a decision-support aid, and its performance 
 
 CoffeeLeaf AI demonstrates the integration of an image classification model into a Progressive Web Application for coffee leaf condition identification. The application displays predicted classes and associated confidence scores, providing a functional demonstration of the proposed workflow. However, the observations reported in this study do not establish overall model accuracy. A quantitative evaluation using a documented independent test set is needed to assess classification performance and generalization.
 
-## Data Availability
+## Data Availability Statement
 
 The original JMuBEN/JMuBEN2 dataset is available from its original source [3]. The CoffeeLeaf AI project uses a subset of 5,000 images, comprising 1,000 images per class, selected and reorganized from the original dataset. Project materials are available in the public GitHub repository [1]. Reuse and redistribution of the images are subject to the original dataset's licensing terms.
 
 ## Code Availability
 
 The CoffeeLeaf AI source code is publicly available at [https://github.com/EuFreela/coffeeleaf-ai](https://github.com/EuFreela/coffeeleaf-ai). The repository contains the project source code and associated project materials.
-
-## Author Contributions
-
-Lameck Silva Fernandes was responsible for conceptualization, data curation, model training, software development, implementation of the CoffeeLeaf AI Progressive Web App, and manuscript preparation.
 
 ## Funding
 
@@ -115,9 +114,9 @@ This research received no external funding.
 
 The author declares no conflicts of interest.
 
-## Use of AI-Assisted Tools
+## Declaration of AI Usage
 
-Generative AI tools were used to assist with manuscript drafting, language editing, and organization. The author reviewed the manuscript and is responsible for the accuracy of its content, including the references, methods, and results.
+During the preparation of this manuscript, the author used ChatGPT (OpenAI) for the following purposes: (1) to assist in drafting and structuring the manuscript; (2) to translate and refine the English language; and (3) to assist in writing the code and guiding the training of the machine learning model. After using this tool, the author reviewed and edited all content (text and code) and takes full responsibility for the accuracy, integrity, and originality of the publication.
 
 ## References
 
@@ -130,4 +129,4 @@ Generative AI tools were used to assist with manuscript drafting, language editi
 [4] R. Krohling, J. E. Tozzi de Souza, and L. M. Tassis. BRACOT - a brazilian arabica coffee tree images dataset for instance segmentation of coffee leaves. Mendeley Data, 2021. URL [https://data.mendeley.com/datasets/pmkbyjpf6k/1](https://data.mendeley.com/datasets/pmkbyjpf6k/1).
 
 ---
-*Publicação: Preprint em processo de submissão.*
+**Publication:** This preprint is officially published and available at Zenodo with the DOI: [10.5281/zenodo.23480207](https://doi.org/10.5281/zenodo.23480207)
