@@ -2,8 +2,7 @@
 
 **Author:** Lameck Silva Fernandes  
 **Affiliation:** Independent Researcher  
-**Location:** Passos, MG, Brazil  
-**ORCID:** [https://orcid.org/0000-0002-5476-0537](https://orcid.org/0000-0002-5476-0537)
+**Location:** Passos, MG, Brazil
 
 ---
 
