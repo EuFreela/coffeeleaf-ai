@@ -2,7 +2,7 @@
 
 **Author:** Lameck Silva Fernandes  
 **Affiliation:** Independent Researcher  
-**Location:** Passos, MG, Brazil
+**Location:** Passos, MG, Brazil  
 
 ---
 
@@ -63,7 +63,7 @@ A subset of 5,000 images was selected from the publicly available JMuBEN/JMuBEN2
 
 Generative AI tools (ChatGPT, OpenAI) were used to assist in drafting the manuscript and in providing technical guidance for writing the code used to train and implement the classification model. The author reviewed and validated all AI-generated content and code.
 
-The image classification model was trained using Google Teachable Machine. The training configuration consisted of 50 epochs, a batch size of 16, and a learning rate of 0.001. The model was trained in a single training session using the platform's training interface.
+The image classification model was trained using Google Teachable Machine. Internally, the platform employs a Convolutional Neural Network (CNN), specifically utilizing the MobileNet architecture as a backbone via transfer learning [citation:3][citation:6]. This lightweight architecture is designed for efficient image classification on mobile and web environments. The training configuration used in the platform's interface consisted of 50 epochs, a batch size of 16, and a learning rate of 0.001. The model was trained in a single session using the platform's training interface.
 
 The platform's automatic data partitioning was used. However, the exact partitioning proportions and the specific roles of the resulting subsets were not independently verified. The exported model files are needed to further document the model architecture and implementation details.
 
