@@ -1,268 +1,133 @@
-<h1 align="center">Desenvolvimento de uma Progressive Web App para identificação de condições foliares do cafeeiro utilizando inteligência artificial</h1>
+# Development of a Progressive Web Application for Coffee Leaf Condition Identification Using Artificial Intelligence
 
-## Resumo
-
-A cafeicultura apresenta grande importância econômica e social, sendo o monitoramento fitossanitário das plantas uma atividade fundamental para a manutenção da produtividade e da qualidade da produção. A identificação de doenças e pragas em folhas de café é frequentemente realizada por inspeção visual, procedimento que pode demandar tempo, conhecimento especializado e deslocamento até as áreas de cultivo. Nesse contexto, técnicas de visão computacional e aprendizado de máquina podem contribuir para a criação de ferramentas capazes de auxiliar na identificação automática de alterações nas folhas do cafeeiro.
-
-Este trabalho propõe o desenvolvimento de uma solução baseada em inteligência artificial para classificação de imagens de folhas de **Coffea arabica**, utilizando conjuntos de imagens previamente classificados para treinamento do modelo. Como base de dados, será utilizado o conjunto JMuBEN/JMuBEN2, composto por 58.555 imagens distribuídas entre cinco classes: folhas saudáveis (Healthy), minador (Miner), ferrugem (Rust), Phoma e Cercospora. As imagens foram obtidas em condições reais de cultivo no Quênia, com apoio de um patologista na identificação das condições foliares.
-
-O treinamento será utilizado para obtenção dos pesos do modelo de classificação, que posteriormente serão empregados em uma aplicação Progressive Web App (PWA). A aplicação será projetada para funcionar tanto em navegadores de computadores quanto em dispositivos móveis, permitindo o acesso à câmera do aparelho para aquisição de novas imagens. A imagem capturada será submetida ao modelo treinado, possibilitando a comparação de suas características visuais com os padrões aprendidos durante o treinamento.
-
-Como resultado esperado, pretende-se desenvolver um protótipo acessível e de baixo custo capaz de auxiliar na triagem de folhas de café, indicando a condição mais provável da amostra analisada.
-
-**Palavras-chave:** inteligência artificial; visão computacional; café arábica; doenças foliares; aprendizado de máquina; Progressive Web App.
+**Author:** Lameck Silva Fernandes  
+**Affiliation:** Independent Researcher  
+**Location:** Passos, MG, Brazil  
 
 ---
 
-## 1. Introdução
+## Abstract
 
-A produção de café está diretamente relacionada às condições fitossanitárias das plantas. Doenças e pragas que afetam as folhas podem comprometer o desenvolvimento das plantas e, consequentemente, interferir na produção. A identificação dessas alterações é tradicionalmente realizada por observação visual, sendo necessário conhecimento específico para diferenciar sintomas semelhantes.
+Coffee production has substantial economic and social importance, and plant health monitoring is important for maintaining productivity and crop quality. Identifying diseases and pests affecting coffee leaves through visual inspection may require time and specialist knowledge. Computer vision can support tools for the preliminary identification of visible leaf conditions.
 
-O avanço das técnicas de inteligência artificial, especialmente na área de visão computacional, possibilitou o desenvolvimento de sistemas capazes de analisar imagens e identificar padrões associados a diferentes condições de plantas. Nesse contexto, conjuntos de dados contendo imagens previamente classificadas são fundamentais para o treinamento de modelos de aprendizado de máquina.
+This paper presents CoffeeLeaf AI, a Progressive Web Application (PWA) integrating an image classification model for five coffee leaf condition categories: Healthy, Miner, Rust, Phoma, and Cercospora. A total of 5,000 images, comprising 1,000 samples per class, were organized from publicly available datasets and used in a model trained with Google Teachable Machine. The training configuration used 50 epochs, a batch size of 16, and a learning rate of 0.001. The resulting model was integrated into a browser-accessible application that displays predicted classes and confidence scores.
 
-Um conjunto particularmente relevante para esse propósito é o JMuBEN/JMuBEN2, apresentado por Jepkoech et al. (2021). Os autores desenvolveram conjuntos de imagens de folhas de café arábica coletadas na plantação de Mutira, no condado de Kirinyaga, Quênia. A aquisição foi realizada em condições reais utilizando câmera digital e contou com o auxílio de um patologista para identificação das condições das folhas.
+A functional demonstration showed a prediction of "Healthy" with a displayed confidence score of 100.0 for a single image. This observation demonstrates the application's prediction interface but does not establish overall model accuracy. No quantitative evaluation results from a separately documented independent test set are reported. Further evaluation on labeled, held-out images and external validation are needed to assess model performance and generalization. CoffeeLeaf AI is intended to support preliminary visual assessment and does not replace evaluation by a qualified plant-health specialist.
 
-O conjunto reúne cinco classes: **Healthy**, correspondente às folhas saudáveis; **Miner**, relacionada ao ataque do minador; **Rust**, correspondente à ferrugem; **Phoma**; e **Cercospora**. Segundo os autores, o conjunto totaliza 58.555 imagens, sendo 18.985 de folhas saudáveis, 16.979 de folhas afetadas por minador, 8.337 relacionadas à ferrugem, 6.572 relacionadas à Phoma e 7.682 relacionadas à Cercospora.
-
-A existência de imagens já classificadas torna esse conjunto particularmente adequado para uma proposta de classificação automática. Diferentemente do conjunto BRACOT utilizado inicialmente na análise deste projeto, cujo objetivo principal é a segmentação de folhas e cujas anotações disponibilizadas identificam regiões como \`leaf\`, o JMuBEN/JMuBEN2 apresenta as imagens associadas às condições foliares. O BRACOT possui 300 imagens e 1.662 instâncias anotadas e foi desenvolvido especificamente para segmentação de folhas de cafeeiro.
-
-Dessa maneira, este trabalho propõe utilizar o conjunto JMuBEN/JMuBEN2 como base para treinamento de um modelo de inteligência artificial destinado à classificação de imagens de folhas de café. Posteriormente, os pesos obtidos no treinamento serão integrados a uma aplicação do tipo **\*\*Progressive Web App (PWA)\*\***, permitindo que o usuário utilize um navegador de computador ou smartphone para realizar a captura de uma imagem por meio da câmera do dispositivo.
-
-A proposta busca aproximar a utilização de modelos de inteligência artificial do ambiente agrícola, oferecendo uma interface simples na qual o usuário possa fotografar uma folha e receber uma classificação baseada no modelo treinado.
+**Keywords:** artificial intelligence; computer vision; Arabica coffee; leaf diseases; machine learning; Progressive Web App; image classification.
 
 ---
 
-## 2. Materiais e métodos
+## 1. Introduction
 
-### 2.1 Base de dados
+Coffee production is influenced by the phytosanitary condition of plants. Pests and diseases affecting leaves may compromise plant development and, consequently, crop production. These conditions are often identified through visual observation, which requires sufficient knowledge to distinguish symptoms that may look similar.
 
-Para o desenvolvimento do modelo será utilizado o conjunto de imagens JMuBEN/JMuBEN2, disponibilizado publicamente pelos pesquisadores responsáveis pelo dataset. O artigo que apresenta a base informa que as imagens foram obtidas em uma plantação de café arábica localizada em Mutira, no condado de Kirinyaga, Quênia, sob condições reais de campo. A aquisição contou com câmera Fujifilm X-T4 e participação de um patologista, que auxiliou na identificação das condições das folhas.
+Recent advances in artificial intelligence, particularly computer vision, have enabled systems to analyze images and identify visual patterns associated with different plant conditions. Datasets containing labeled images are important for training and evaluating supervised machine-learning models.
 
-As imagens são distribuídas entre cinco classes:
+The JMuBEN/JMuBEN2 dataset [2, 3] used in this study contains images of Arabica coffee leaves collected at a farm in Mutira, Kirinyaga County, Kenya. Image acquisition took place under field conditions, and a plant pathologist contributed to the identification of leaf conditions. The dataset contains five classes: Healthy, Miner, Rust, Phoma, and Cercospora.
 
-- **Healthy** → Saudável
-- **Miner** → Minador
-- **Rust** → Ferrugem
-- **Phoma** → Phoma
-- **Cercospora** → Cercosporiose
+The dataset is intended for classification of leaf conditions. This differs from BRACOT, a dataset developed for instance segmentation of coffee leaves, with 300 images and 1,662 annotated instances [4]. Because this study focuses on classifying leaf conditions, JMuBEN/JMuBEN2 was used as the primary dataset.
 
-Os autores destacam que as imagens foram anotadas e estão preparadas para utilização em aplicações de aprendizado de máquina relacionadas à identificação e classificação de doenças em folhas de café.
+This paper documents the development of an image classification model integrated into a Progressive Web App (PWA). The implemented interface allows users to submit coffee leaf images and view the predicted class. The study focuses on the implementation of the application and a functional demonstration of its prediction interface; quantitative model performance is not evaluated in this report.
 
-### 2.2 Amostragem das classes
+## 2. Materials and Methods
 
-Para ilustrar as classes utilizadas na amostragem do conjunto de dados, são apresentadas quatro imagens representativas de cada categoria. A organização das imagens segue a estrutura de diretórios utilizada no projeto, mantendo o padrão de nomenclatura `Classe_0001`, `Classe_0002` e assim por diante.
+### 2.1 Dataset
 
-**Healthy — Folha saudável**
+The original JMuBEN/JMuBEN2 dataset is reported to contain 58,555 images across five classes. For the CoffeeLeaf AI project, a subset of 5,000 images was selected from the original dataset, comprising 1,000 images per class: Healthy, Miner, Rust, Phoma, and Cercospora. For each class, the first 1,000 images in the dataset's existing order were selected. The selected images were then renamed and organized by class before being uploaded to Google Teachable Machine for training. This subset represents only part of the original dataset; no random sampling procedure was used.
 
-| Healthy_0001 | Healthy_0002 | Healthy_0003 | Healthy_0004 |
-|:---:|:---:|:---:|:---:|
-| <img src="data/Healthy/Healthy_0001.jpg" width="180"> | <img src="data/Healthy/Healthy_0002.jpg" width="180"> | <img src="data/Healthy/Healthy_0003.jpg" width="180"> | <img src="data/Healthy/Healthy_0004.jpg" width="180"> |
+**Table 1: Reported class distribution of the JMuBEN/JMuBEN2 dataset.**
 
-**Miner — Minador**
+| Class | Number of images |
+| :--- | :--- |
+| Healthy | 18,985 |
+| Miner | 16,979 |
+| Rust | 8,337 |
+| Phoma | 6,572 |
+| Cercospora | 7,682 |
+| **Total** | **58,555** |
 
-| Miner_0001 | Miner_0002 | Miner_0003 | Miner_0004 |
-|:---:|:---:|:---:|:---:|
-| <img src="data/Miner/Miner_0001.jpg" width="180"> | <img src="data/Miner/Miner_0002.jpg" width="180"> | <img src="data/Miner/Miner_0003.jpg" width="180"> | <img src="data/Miner/Miner_0004.jpg" width="180"> |
+The five classes used in the CoffeeLeaf AI project were retained as supplied by the dataset: Healthy (healthy leaf), Miner (leaf miner), Rust (coffee leaf rust), Phoma, and Cercospora. These class names were kept consistent when organizing the selected images for training.
 
-**Cercospora — Cercosporiose**
+### 2.2 Dataset sampling and illustrative images
 
-| Cercospora_0001 | Cercospora_0002 | Cercospora_0003 | Cercospora_0004 |
-|:---:|:---:|:---:|:---:|
-| <img src="data/Cercospora/Cercospora_0001.jpg" width="180"> | <img src="data/Cercospora/Cercospora_0002.jpg" width="180"> | <img src="data/Cercospora/Cercospora_0003.jpg" width="180"> | <img src="data/Cercospora/Cercospora_0004.jpg" width="180"> |
+Figure 1 shows representative images from the five coffee leaf condition classes.
 
-**Phoma — Phoma**
+*(In the actual PDF, there is a figure showing representative images. In this Markdown, you can insert the image link or just reference it).*
 
-| Phoma_0001 | Phoma_0002 | Phoma_0003 | Phoma_0004 |
-|:---:|:---:|:---:|:---:|
-| <img src="data/Phoma/Phoma_0001.jpg" width="180"> | <img src="data/Phoma/Phoma_0002.jpg" width="180"> | <img src="data/Phoma/Phoma_0003.jpg" width="180"> | <img src="data/Phoma/Phoma_0004.jpg" width="180"> |
+### 2.3 Image preprocessing
 
-**Rust — Ferrugem**
+A subset of 5,000 images was selected from the publicly available JMuBEN/JMuBEN2 dataset, comprising 1,000 images from each of the five classes: Healthy, Miner, Rust, Phoma, and Cercospora. The selected images were renamed and organized into class-specific groups before being uploaded to Google Teachable Machine. No additional manual image preprocessing was performed before uploading. Any resizing, normalization, or other transformations applied internally by the platform were not independently configured or verified and are therefore not specified here.
 
-| rust_0001 | rust_0002 | rust_0003 | rust_0004 |
-|:---:|:---:|:---:|:---:|
-| <img src="data/Rust/rust_0001.jpg" width="180"> | <img src="data/Rust/rust_0002.jpg" width="180"> | <img src="data/Rust/rust_0003.jpg" width="180"> | <img src="data/Rust/rust_0004.jpg" width="180"> |
+### 2.4 Model training and data partitioning
 
-As imagens apresentadas acima correspondem apenas a uma amostragem visual das cinco classes utilizadas no projeto. O conjunto completo permanece organizado nos respectivos diretórios dentro de `data/`, seguindo o mesmo padrão de nomenclatura.
+The image classification model was trained using Google Teachable Machine. The training configuration consisted of 50 epochs, a batch size of 16, and a learning rate of 0.001. The model was trained in a single training session using the platform's training interface.
 
----
+The platform's automatic data partitioning was used. However, the exact partitioning proportions and the specific roles of the resulting subsets were not independently verified. The exported model files are needed to further document the model architecture and implementation details.
 
-### 2.2 Pré-processamento das imagens
+After training, predictions were inspected using the CoffeeLeaf AI Progressive Web Application (PWA). No quantitative evaluation on a separately documented, independent test set was conducted. Accordingly, no overall accuracy, precision, recall, or F1-score is reported in this study.
 
-Antes do treinamento, as imagens deverão passar por uma etapa de preparação. Essa etapa terá como objetivo adequar os arquivos ao formato de entrada exigido pelo modelo e reduzir possíveis diferenças relacionadas à resolução, escala e iluminação.
+### 2.5 Classification tasks
 
-O processamento poderá incluir redimensionamento das imagens, normalização dos valores dos pixels e aplicação de técnicas de aumento de dados (*\*data augmentation\**). Entre as possíveis transformações estão pequenas rotações, espelhamentos, alterações moderadas de brilho e variações de enquadramento.
+The implemented classification task assigns input coffee leaf images to one of five categories: Healthy, Miner, Rust, Phoma, or Cercospora. The model's output is presented by the application as a predicted class and an associated confidence score.
 
-Essa etapa é importante porque a aplicação final deverá receber imagens produzidas por smartphones em condições diferentes das imagens utilizadas durante o treinamento. Assim, aumentar a diversidade das amostras durante o treinamento pode contribuir para melhorar a capacidade de generalização do modelo.
+## 3. CoffeeLeaf AI Progressive Web Application
 
-### 2.3 Treinamento do modelo
+The CoffeeLeaf AI PWA integrates the trained image classification model into an application workflow that displays the predicted class and its associated confidence score. Predictions for selected images were inspected after training. This study reports a functional demonstration of the application rather than a quantitative evaluation of model performance.
 
-O treinamento será realizado utilizando aprendizado supervisionado, uma vez que as imagens utilizadas possuem classes conhecidas. O modelo receberá como entrada uma imagem de folha e aprenderá a associar características visuais presentes na imagem à classe correspondente.
+## 4. System Architecture
 
-Uma possibilidade para o desenvolvimento é utilizar uma arquitetura de classificação baseada em redes neurais convolucionais, empregando **\*\*transfer learning\*\***. Nesse cenário, uma rede previamente treinada em grandes conjuntos de imagens pode ser adaptada para as cinco classes do problema.
+The CoffeeLeaf AI system comprises a model development stage and an application stage. During model development, 5,000 labeled coffee leaf images across five classes were used to train an image classification model with Google Teachable Machine. During application use, an input image is processed by the integrated model, and the application displays the predicted class and its associated confidence score. The system is presented as a functional application prototype; its overall classification performance has not been quantitatively established in this study.
 
-Durante o treinamento, os dados serão divididos em subconjuntos de treinamento, validação e teste. O conjunto de treinamento será utilizado para ajustar os parâmetros da rede, enquanto o conjunto de validação permitirá acompanhar o comportamento do modelo durante o processo de aprendizagem. O conjunto de teste será reservado para a avaliação final.
+## 5. Results and Discussion
 
-Essa estratégia também é observada em trabalhos recentes que utilizam o conjunto de 58.555 imagens para classificação de doenças do cafeeiro. Um estudo recente, por exemplo, empregou divisão de 70% para treinamento, 15% para teste e 15% para validação.
+A functional demonstration of CoffeeLeaf AI showed the application displaying the predicted class "Healthy" with a confidence score of 100.0. This observation illustrates the application's prediction interface for a single input image; it does not establish the model's overall classification accuracy or generalization performance. Although the model was trained using the automatic data partitioning provided by Google Teachable Machine, no quantitative evaluation results from a separately documented independent test set are reported. Future work should evaluate the model using labeled images not used during training and report appropriate performance metrics.
 
-Ao final do processo, serão obtidos os **pesos do modelo**, que representam os parâmetros aprendidos pela rede durante o treinamento. Esses pesos serão utilizados posteriormente pela aplicação para realizar inferências sobre novas imagens.
+## 6. Discussion and Limitations
 
-### 2.4 Classificação proposta
+The project integrates an image classifier with a browser-accessible PWA for preliminary classification of coffee leaf images. The interface supports the image-input methods implemented in the released version; any camera functionality should be confirmed against the code.
 
-Inicialmente, a solução será desenvolvida considerando as cinco classes originais:
+A key limitation is that JMuBEN/JMuBEN2 represents a particular geographic origin and a specific dataset collection process. Performance on coffee farms in other regions, under different climate conditions, with different cultivars, or using different devices cannot be assumed from results on the original dataset alone. External validation using appropriately labeled images from the intended deployment region is needed before making claims about field reliability.
 
-- **Healthy** → Saudável
-- **Miner** → Minador
-- **Rust** → Ferrugem
-- **Phoma** → Phoma
-- **Cercospora** → Cercosporiose
+The system should be interpreted as a decision-support aid, and its performance claims should remain limited to the conditions evaluated in this study. The model's predictions should not be treated as definitive diagnoses.
 
-Essa abordagem permite que o sistema forneça uma resposta mais específica do que simplesmente indicar se uma folha está saudável ou doente.
+## 7. Conclusion
 
-Entretanto, uma segunda possibilidade de utilização consiste em agrupar as classes em duas categorias:
+CoffeeLeaf AI demonstrates the integration of an image classification model into a Progressive Web Application for coffee leaf condition identification. The application displays predicted classes and associated confidence scores, providing a functional demonstration of the proposed workflow. However, the observations reported in this study do not establish overall model accuracy. A quantitative evaluation using a documented independent test set is needed to assess classification performance and generalization.
 
-- **Saudável:** Healthy;
-- **Doente:** Miner, Rust, Phoma e Cercospora.
+## Data Availability
 
-Essa classificação binária poderá ser utilizada caso o objetivo principal seja desenvolver uma ferramenta de triagem inicial.
+The original JMuBEN/JMuBEN2 dataset is available from its original source [3]. The CoffeeLeaf AI project uses a subset of 5,000 images, comprising 1,000 images per class, selected and reorganized from the original dataset. Project materials are available in the public GitHub repository [1]. Reuse and redistribution of the images are subject to the original dataset's licensing terms.
 
-Essa possibilidade também é sustentada por trabalhos que utilizaram o mapeamento de **\*\*Healthy → Healthy\*\*** e das classes Miner, Cercospora, Rust e Phoma para **\*\*Unhealthy\*\***, demonstrando a possibilidade de utilizar o conjunto em uma tarefa binária.
+## Code Availability
 
----
+The CoffeeLeaf AI source code is publicly available at [https://github.com/EuFreela/coffeeleaf-ai](https://github.com/EuFreela/coffeeleaf-ai). The repository contains the project source code and associated project materials.
 
-## 3. Desenvolvimento da Progressive Web App
+## Author Contributions
 
-Após o treinamento, será desenvolvida uma **Progressive Web App (PWA)** para disponibilizar o modelo ao usuário final.
+Lameck Silva Fernandes was responsible for conceptualization, data curation, model training, software development, implementation of the CoffeeLeaf AI Progressive Web App, and manuscript preparation.
 
-A escolha de uma PWA está relacionada à possibilidade de utilizar a mesma aplicação por meio de um navegador web e em dispositivos móveis, evitando a necessidade de desenvolver inicialmente aplicativos independentes para diferentes sistemas operacionais.
+## Funding
 
-A aplicação será estruturada em três etapas principais:
+This research received no external funding.
 
-**1. Captura da imagem → 2. Processamento → 3. Classificação**
+## Conflicts of Interest
 
-O usuário poderá acessar a aplicação utilizando um navegador compatível. Em um smartphone, a interface poderá solicitar autorização para utilização da câmera. Após a autorização, uma imagem da folha será capturada diretamente pelo dispositivo.
+The author declares no conflicts of interest.
 
-A imagem será então preparada conforme os mesmos critérios utilizados durante o treinamento do modelo, como redimensionamento e normalização. Posteriormente, será encaminhada ao modelo de inteligência artificial para realização da inferência.
+## Use of AI-Assisted Tools
 
-O resultado poderá ser apresentado ao usuário de maneira simples, por exemplo:
+Generative AI tools were used to assist with manuscript drafting, language editing, and organization. The author reviewed the manuscript and is responsible for the accuracy of its content, including the references, methods, and results.
 
-**Resultado:** Folha possivelmente saudável  
-**Confiança do modelo:** 94%
+## References
 
-ou, no modo multiclasse:
+[1] Lameck Silva Fernandes. CoffeeLeaf AI: Image classification application and training data. [https://github.com/EuFreela/coffeeleaf-ai](https://github.com/EuFreela/coffeeleaf-ai), 2026. Source code and project-organized image data.
 
-**Resultado:** Ferrugem  
-**Confiança do modelo:** 91%
+[2] J. Jepkoech, D. M. Mugo, B. K. Kenduiywo, and E. C. Too. Arabica coffee leaf images dataset for coffee leaf disease detection and classification. Data in Brief, 36:107142, 2021. doi: 10.1016/j.dib.2021.107142. URL [https://pmc.ncbi.nlm.nih.gov/articles/PMC8165403/](https://pmc.ncbi.nlm.nih.gov/articles/PMC8165403/).
 
-É importante destacar que o valor de confiança apresentado pela rede não deve ser interpretado automaticamente como uma confirmação agronômica ou diagnóstico definitivo. O sistema será concebido como uma ferramenta de **auxílio à identificação visual**, e não como substituto de avaliação realizada por profissional especializado.
+[3] JMuBEN/JMuBEN2 dataset authors. Arabica coffee leaf disease classification dataset: Jmuben/jmuben2. Mendeley Data, 2021. URL [https://data.mendeley.com/datasets/t2r6rszp5c/1](https://data.mendeley.com/datasets/t2r6rszp5c/1).
+
+[4] R. Krohling, J. E. Tozzi de Souza, and L. M. Tassis. BRACOT - a brazilian arabica coffee tree images dataset for instance segmentation of coffee leaves. Mendeley Data, 2021. URL [https://data.mendeley.com/datasets/pmkbyjpf6k/1](https://data.mendeley.com/datasets/pmkbyjpf6k/1).
 
 ---
-
-## 4. Arquitetura proposta
-
-A arquitetura geral do sistema poderá ser representada pelo seguinte fluxo:
-
-```text
-
-Base de imagens classificadas
-
-            ↓
-
-     Pré-processamento
-
-            ↓
-
-    Treinamento da rede
-
-            ↓
-
-     Geração dos pesos
-
-            ↓
-
- Integração dos pesos na PWA
-
-            ↓
-
-          PWA
-
-            ↓
-
- Câmera do smartphone/computador
-
-            ↓
-
-     Nova imagem da folha
-
-            ↓
-
-     Pré-processamento
-
-            ↓
-
-     Inferência do modelo
-
-            ↓
-
-        Classificação
-
-```
-
-Dessa forma, o treinamento e a aplicação final serão tratados como duas etapas relacionadas, porém distintas. O treinamento será realizado previamente, enquanto a PWA utilizará os pesos já aprendidos para classificar novas imagens.
-
-Um dos principais benefícios dessa arquitetura é permitir que o usuário final não precise realizar o treinamento do modelo. Ele apenas acessará a aplicação e fornecerá uma imagem para análise.
-
----
-
-## 5. Avaliação do modelo
-
-A avaliação deverá considerar métricas apropriadas para problemas de classificação. Entre as métricas previstas estão **acurácia, precisão, revocação (recall), F1-score e matriz de confusão**.
-
-A matriz de confusão será especialmente importante porque permitirá identificar quais classes apresentam maior dificuldade de diferenciação. Por exemplo, poderá ser observado se o modelo confunde determinadas folhas com ferrugem e cercosporiose ou se apresenta maior dificuldade na identificação de folhas saudáveis.
-
-Além da avaliação realizada com as imagens de teste, será importante realizar uma segunda avaliação utilizando imagens capturadas diretamente por smartphones. Essa etapa é particularmente relevante para a proposta da PWA, pois as imagens utilizadas no ambiente real podem apresentar diferenças de iluminação, distância, orientação, fundo e qualidade em relação às imagens utilizadas no treinamento.
-
-Assim, a avaliação final deverá considerar não somente o desempenho estatístico do modelo, mas também sua capacidade de funcionar em condições próximas àquelas encontradas pelo usuário.
-
----
-
-## 6. Resultados esperados
-
-Espera-se desenvolver um modelo capaz de classificar imagens de folhas de café nas cinco categorias presentes no conjunto utilizado, bem como disponibilizar esse modelo em uma aplicação acessível por navegador.
-
-Como resultado tecnológico, espera-se obter uma PWA capaz de utilizar a câmera do dispositivo para capturar uma imagem e submetê-la ao modelo treinado. A aplicação deverá apresentar ao usuário a classe estimada pelo modelo e uma medida de confiança da previsão.
-
-Outro resultado esperado é demonstrar a viabilidade da integração entre **inteligência artificial, visão computacional e tecnologias web** em uma aplicação direcionada ao contexto agrícola.
-
-A utilização de imagens obtidas em condições reais constitui um aspecto relevante da proposta. O próprio conjunto JMuBEN/JMuBEN2 foi coletado em ambiente de plantação, incluindo imagens obtidas em diferentes condições de campo, e contou com a participação de especialista na identificação das condições foliares.
-
-Entretanto, uma limitação importante é que o modelo será treinado com imagens provenientes de uma determinada origem geográfica e de um conjunto específico de condições de aquisição. Portanto, o desempenho em plantações de outras regiões, incluindo diferentes condições climáticas, variedades, iluminação e características das folhas, deverá ser avaliado experimentalmente.
-
----
-
-## 7. Conclusão
-
-Este trabalho propõe o desenvolvimento de uma solução baseada em inteligência artificial para classificação de folhas de café, utilizando imagens previamente classificadas e posteriormente disponibilizando o modelo treinado por meio de uma Progressive Web App.
-
-O conjunto JMuBEN/JMuBEN2 apresenta características adequadas para essa finalidade, uma vez que reúne 58.555 imagens de folhas de café arábica distribuídas entre as classes Healthy, Miner, Rust, Phoma e Cercospora, com identificação das condições das folhas e das doenças.
-
-A estratégia proposta consiste em utilizar essas imagens para treinamento de uma rede de classificação, obter os pesos aprendidos e incorporá-los a uma aplicação web capaz de utilizar a câmera de computadores e dispositivos móveis. Dessa maneira, pretende-se criar uma ferramenta simples para realizar uma primeira análise visual automatizada de folhas de café.
-
-Como continuidade do trabalho, deverão ser realizados experimentos para avaliar o desempenho do modelo, comparar diferentes arquiteturas de redes neurais, analisar possíveis confusões entre classes e testar a aplicação com imagens capturadas diretamente por smartphones em condições reais. Dessa forma, será possível verificar não somente a capacidade de classificação do modelo em um conjunto controlado de teste, mas também sua aplicabilidade prática em um cenário agrícola.
-
----
-
-## Referências
-
-1. JEPKOECH, J.; MUGO, D. M.; KENDUIYWO, B. K.; TOO, E. C. **Arabica coffee leaf images dataset for coffee leaf disease detection and classification**. **Data in Brief**, v. 36, 107142, 2021. DOI: 10.1016/j.dib.2021.107142. https\://pmc.ncbi.nlm.nih.gov/articles/PMC8165403/
-
-2. KROHLING, R.; TOZZI DE SOUZA, J. E.; TASSIS, L. M. **BRACOT – A Brazilian Arabica Coffee Tree images dataset for instance segmentation of coffee leaves**. Mendeley Data, 2021. DOI: 10.17632/pmkbyjpf6k.1. https\://data.mendeley.com/datasets/pmkbyjpf6k/1
-
-3. **Arabica coffee leaf disease classification dataset – JMuBEN/JMuBEN2**. Mendeley Data, 2021. Conjunto de imagens classificadas de folhas de café arábica nas categorias Healthy, Miner, Rust, Phoma e Cercospora. https\://data.mendeley.com/datasets/t2r6rszp5c/1
-
----
-
-# Resultados do PWA
-
-**Primeira fase de treinamento do modelo de inteligência artificial**, utilizando uma amostra balanceada de 5.000 imagens, sendo 1.000 imagens para cada uma das cinco classes. O aumento da quantidade e da diversidade dos dados de treinamento pode contribuir para melhorar a capacidade de generalização e, consequentemente, o desempenho do modelo, desde que os dados sejam representativos e de qualidade.
-
-<img src="app.jpg" width="180" align="center">
+*Publicação: Preprint em processo de submissão.*
