@@ -126,6 +126,3 @@ During the preparation of this manuscript, the author used ChatGPT (OpenAI) for 
 [3] JMuBEN/JMuBEN2 dataset authors. Arabica coffee leaf disease classification dataset: Jmuben/jmuben2. Mendeley Data, 2021. URL [https://data.mendeley.com/datasets/t2r6rszp5c/1](https://data.mendeley.com/datasets/t2r6rszp5c/1).
 
 [4] R. Krohling, J. E. Tozzi de Souza, and L. M. Tassis. BRACOT - a brazilian arabica coffee tree images dataset for instance segmentation of coffee leaves. Mendeley Data, 2021. URL [https://data.mendeley.com/datasets/pmkbyjpf6k/1](https://data.mendeley.com/datasets/pmkbyjpf6k/1).
-
----
-**Publication:** This preprint is officially published and available at Zenodo with the DOI: [10.5281/zenodo.23480207](https://doi.org/10.5281/zenodo.23480207)
