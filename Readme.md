@@ -1,5 +1,7 @@
 # Development of a Progressive Web Application for Coffee Leaf Condition Identification Using Artificial Intelligence
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23480207.svg)](https://doi.org/10.5281/zenodo.23480207)
+
 **Author:** Lameck Silva Fernandes  
 **Affiliation:** Independent Researcher  
 **Location:** Passos, MG, Brazil  
