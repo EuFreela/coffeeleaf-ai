@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the project and, where relevant, the associated article."
+title: "CoffeeLeaf AI: Coffee Leaf Condition Classification Application"
+type: software
+authors:
+  - family-names: Fernandes
+    given-names: Lameck Silva
+    orcid: "https://orcid.org/0000-0002-5476-0537"
+    affiliation: "Independent Researcher"
+url: "https://github.com/EuFreela/coffeeleaf-ai"
+license: MIT
+preferred-citation:
+  type: article
+  title: "Development of a Progressive Web Application for Coffee Leaf Condition Identification Using Artificial Intelligence"
+  authors:
+    - family-names: Fernandes
+      given-names: Lameck Silva
+  year: 2026
+  doi: "10.5281/zenodo.23480207"
+  url: "https://zenodo.org/records/23480207"
